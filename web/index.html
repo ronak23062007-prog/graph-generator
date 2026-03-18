@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Graph Generator</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Chart.js and Zoom plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    
+    <!-- Eel Python Bridge -->
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body data-theme="light">
+    <!-- Animated background mesh -->
+    <div class="background-mesh"></div>
+
+    <div class="glass-container">
+        <!-- Main Glass Panel -->
+        <div class="glass layout">
+            
+            <aside class="glass-sidebar">
+                <div class="brand">
+                    <h1>GraphStudio ✨</h1>
+                </div>
+
+                <div class="control-group">
+                    <label for="chartType">Chart Type</label>
+                    <select id="chartType" class="glass-input">
+                        <option value="line">Line Graph</option>
+                        <option value="bar">Bar Chart</option>
+                        <option value="scatter">Scatter Plot</option>
+                        <option value="radar">Radar Chart</option>
+                        <option value="polarArea">Polar Area</option>
+                        <option value="doughnut">Doughnut</option>
+                        <option value="pie">Pie</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label>Data Actions</label>
+                    <button id="btn-upload" class="glass-btn primary">📁 Upload CSV Data</button>
+                    <button id="btn-manual" class="glass-btn">🖋️ Enter Data Manually</button>
+                    <button id="btn-mock" class="glass-btn">🎲 Generate Random Data</button>
+                </div>
+
+                <div class="control-group">
+                    <label>Display Options</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="fillGraph" checked>
+                        <label for="fillGraph">Fill Line Area</label>
+                    </div>
+                    
+                    <div class="toggle-switch" style="margin-top: 5px;">
+                        <input type="range" id="chartCurvature" min="0" max="0.5" step="0.1" value="0.4" style="width: 80px;">
+                        <label for="chartCurvature">Line Smoothness</label>
+                    </div>
+                </div>
+
+                <div class="control-group" style="padding-top: 5px;">
+                    <label>Export Options</label>
+                    <button id="btn-export" class="glass-btn" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.4);">🖼️ Download as PNG</button>
+                </div>
+
+                <div class="csv-status" id="csv-status" style="display:none;">
+                    <p>Loaded: <strong id="csv-filename">data.csv</strong></p>
+                </div>
+
+                <div style="flex:1;"></div>
+                <button id="theme-toggle" class="glass-btn theme-btn">☀️ Light Mode</button>
+            </aside>
+
+            <main class="chart-container">
+                <canvas id="myChart"></canvas>
+            </main>
+        </div>
+    </div>
+
+    <!-- Manual Data Entry Modal -->
+    <div id="dataModal" class="modal-overlay hidden">
+        <div class="glass modal-content">
+            <div class="modal-header">
+                <h2>🖋️ Manual Data Entry</h2>
+                <button id="btn-close-modal" class="glass-btn icon-btn">✖</button>
+            </div>
+            <div class="modal-body">
+                <div class="data-table-wrapper">
+                    <table id="dataTable" class="glass-table">
+                        <thead>
+                            <tr id="dt-head-row">
+                                <th>Labels (X-Axis)</th>
+                                <th><input type="text" value="Dataset 1" class="cell-header"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="dt-body">
+                            <!-- Rows go here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-actions">
+                    <button id="btn-add-row" class="glass-btn">➕ Add Row</button>
+                    <button id="btn-add-col" class="glass-btn">➕ Add Dataset</button>
+                    <div style="flex:1"></div>
+                    <button id="btn-apply-data" class="glass-btn primary">✨ Apply to Graph</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Initialize Script After Modal DOM Loads -->
+    <script src="script.js"></script>
+</body>
+</html>
